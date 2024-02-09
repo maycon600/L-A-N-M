@@ -14,13 +14,17 @@ import MyMotionDiv2 from "../../components/home/motion/motionFromBottom";
 import MotionDivFromBottom from "../../components/home/motion/motionFromBottom";
 import MotionDivFromTop from "../../components/home/motion/motionFromTop";
 import SoySection from "@/components/home/sections/soySection";
+import CameraSection from "@/components/home/sections/cameraSection";
 import BullSection from "@/components/home/sections/bullSection";
 import { PropertySection } from "@/components/home/sections/propertySection";
 import ProductSection from "@/components/home/sections/productSection";
-import NewsSection from "@/components/home/sections/NewsSection";
+import NewsSection from "@/components/home/sections/newsSection";
 import Footer from "@/components/home/sections/footer";
 import PhoneModel from "../../components/home/sections/PhoneModel";
-import { ModelContextProvider, TextureContextProvider } from "@/components/home/sections/imageContext";
+import {
+  ModelContextProvider,
+  TextureContextProvider,
+} from "@/components/home/sections/imageContext";
 const animationOrder = {
   initial: 0,
   fadeinPrimeiraSessao: 100 / 750, // Inicia um pouco antes da primeira sessão
@@ -236,7 +240,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-        {/* <motion.div
+      {/* <motion.div
           className="sticky top-[20%] z-[60] flex  h-[70vh] w-[20rem] items-start justify-start pl-10 pr-5"
           style={{ x }}
         >
@@ -245,19 +249,17 @@ export default function Home() {
           </div>
         </motion.div> */}
       <main>
-        <TextureContextProvider style={{backgroundColor: "black"}}>
-        <PhoneModel/>
-        <div ref={targetRef} className="">
+        <TextureContextProvider>
           <SoySection />
           <BullSection />
           <PropertySection />
           <ProductSection />
-          <NewsSection  />
-          <div id="battery"></div>
-        </div>
+          <NewsSection />
+          <PhoneModel />
         </TextureContextProvider>
       </main>
-      <Footer  />
+      <CameraSection />
+      <Footer />
     </>
   );
 }

@@ -2,15 +2,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const MotionDivFromBottom = ({ children }:any) => {
+const MotionDivFromBottom = ({ children }: any) => {
   const [ref, inView] = useInView();
 
   const variants = {
-    hidden: { 
+    hidden: {
       y: 100,
       opacity: 0,
     },
-    show: { 
+    show: {
       y: 0,
       opacity: 1,
       transition: {
@@ -26,6 +26,7 @@ const MotionDivFromBottom = ({ children }:any) => {
       initial="hidden"
       animate={inView ? "show" : "hidden"}
       variants={variants}
+      className="pointer-events-none"
     >
       {children}
     </motion.div>

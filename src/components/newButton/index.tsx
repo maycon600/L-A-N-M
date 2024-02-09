@@ -1,3 +1,3 @@
 export function DownloadButton() {
-  return <button className="button">Baixar Agora</button>;
+  return <button className="button z-50">Baixar Agora</button>;
 }

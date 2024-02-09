@@ -3,9 +3,8 @@ import { useScroll, useTransform, motion, useAnimation } from "framer-motion";
 import Spline from "@splinetool/react-spline";
 import { useSpring } from "framer-motion";
 import gsap from "gsap";
-import EarthCanvas from ".";
 import { AboutButton } from "@/components/aboutButton";
-import { DownloadButton, NewButton } from "@/components/newButton";
+import { DownloadButton } from "@/components/newButton";
 import AnimatedQuote from "./text";
 import AnimatedTextWord from "./text";
 import AnimatedTextCharacter from "./te";
@@ -17,7 +16,7 @@ import SoySection from "@/components/home/sections/soySection";
 import BullSection from "@/components/home/sections/bullSection";
 import { PropertySection } from "@/components/home/sections/propertySection";
 import ProductSection from "@/components/home/sections/productSection";
-import NewsSection from "@/components/home/sections/NewsSection";
+import NewsSection from "@/components/home/sections/newsSection";
 import Footer from "@/components/home/sections/footer";
 import PhoneModel from "../../components/home/sections/PhoneModel";
 const animationOrder = {
@@ -62,150 +61,7 @@ export default function Home() {
     target: targetRef,
     offset: ["start end", "end end"],
   });
-  const simulateKeyPress = () => {
-    // Criando um novo evento de teclado
-    const event = new KeyboardEvent("keydown", {
-      key: "∆",
-      keyCode: 75, // Código da tecla "k"
-      bubbles: true, // Permite que o evento se propague
-    });
 
-    // Disparando o evento
-    document.dispatchEvent(event);
-  };
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-  useEffect(() => {
-    if (shouldAnimate) {
-      simulateKeyPress();
-      // Resetando a variável de estado após a animação
-      setShouldAnimate(false);
-    }
-  }, [shouldAnimate]);
-
-  const scale = useTransform(
-    scrollYProgress,
-    [
-      animationOrder1.initial,
-      animationOrder1.chega1,
-      animationOrder1.mantem1,
-      animationOrder1.cresce,
-      animationOrder1.chega2,
-      animationOrder1.mantem2,
-      animationOrder1.cresce2,
-      animationOrder1.chega3,
-      animationOrder1.mantem3,
-      animationOrder1.cresce3,
-      animationOrder1.chega4,
-      animationOrder1.mantem4,
-      animationOrder1.cresce4,
-      animationOrder1.chega5,
-      animationOrder1.mantem5,
-    ],
-    [1, 1, 1, 1.2, 1, 1, 1.2, 1, 1, 1.2, 1, 1, 1.2, 1, 1],
-  );
-  const x = useTransform(
-    scrollYProgress,
-    [
-      animationOrder1.initial,
-      animationOrder1.chega1,
-      animationOrder1.mantem1,
-      animationOrder1.cresce,
-      animationOrder1.chega2,
-      animationOrder1.mantem2,
-      animationOrder1.cresce2,
-      animationOrder1.chega3,
-    ],
-    ["0%", "0%", "0%", "0%", "0%", "0%", "100%", "160%"],
-  );
-
-  const rotate = useTransform(
-    scrollYProgress,
-    [animationOrder1.cresce, animationOrder1.chega2],
-    [2.6, 8.8],
-  );
-  const spring = useSpring(x);
-
-  const [rotationY, setRotationY] = useState(2.6);
-  const controls = useAnimation();
-  const [imagemSelecionada, setImagemSelecionada] = useState("image1");
-  const calculateRotation = (scrollValue, image) => {
-    const segments = [
-      {
-        start: animationOrder1.mantem1,
-        end: animationOrder1.chega2,
-        image: "image2",
-      },
-      {
-        start: animationOrder1.mantem2,
-        end: animationOrder1.chega3,
-        image: "image3",
-      },
-      {
-        start: animationOrder1.mantem3,
-        end: animationOrder1.cresce3,
-        image: "image4",
-      },
-      {
-        start: animationOrder1.cresce4,
-        end: animationOrder1.chega5,
-        image: "image5",
-      },
-    ];
-
-    // Verifica se o scrollValue está antes do primeiro segmento
-    if (scrollValue < segments[0].start) {
-      setImagemSelecionada("image1");
-      return rotationY; // Retorna o valor atual
-    }
-
-    for (let i = 0; i < segments.length; i++) {
-      const { start, end } = segments[i];
-      if (scrollValue >= start && scrollValue <= end) {
-        const progress = (scrollValue - start) / (end - start);
-        setImagemSelecionada(segments[i].image); // Define a imagem com base no segmento
-        return 2.6 + progress * (8.8 - 2.6);
-      }
-    }
-
-    return rotationY; // Retorna o valor atual
-  };
-  useEffect(() => {
-    const updateRotation = (value) => {
-      const targetRotation = calculateRotation(value);
-      setRotationY(targetRotation);
-
-      controls.start({
-        rotateY: targetRotation,
-        transition: { type: "tween", duration: 0.5 },
-      });
-    };
-
-    const unsubscribe = scrollYProgress.onChange(updateRotation);
-
-    return () => unsubscribe();
-  }, [controls, scrollYProgress]);
-
-  const mudarImagem = (novaImagem) => {
-    setImagemSelecionada(novaImagem);
-    console.log(novaImagem);
-  };
-  const textVariant = (delay) => {
-    return {
-      hidden: {
-        y: -50,
-        opacity: 0,
-      },
-      show: {
-        y: 0,
-        opacity: 1,
-        transition: {
-          type: "spring",
-          duration: 1.25,
-          delay: delay,
-        },
-      },
-    };
-  };
   return (
     <>
       <section className=" header h-screen w-screen  overflow-clip bg-[#607559]">
@@ -235,7 +91,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-        {/* <motion.div
+      {/* <motion.div
           className="sticky top-[20%] z-[60] flex  h-[70vh] w-[20rem] items-start justify-start pl-10 pr-5"
           style={{ x }}
         >
@@ -244,19 +100,18 @@ export default function Home() {
           </div>
         </motion.div> */}
       <main>
-
-        <PhoneModel/>
+        <PhoneModel />
         <div id="phone-model"></div>
         <div ref={targetRef} className="">
           <SoySection />
           <BullSection />
           <PropertySection />
           <ProductSection />
-          <NewsSection  />
+          <NewsSection />
           <div id="battery"></div>
         </div>
       </main>
-      <Footer  />
+      <Footer />
     </>
   );
 }

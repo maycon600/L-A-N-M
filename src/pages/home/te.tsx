@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const AnimatedTextCharacter = ({ children }) => {
-  const text = typeof children === 'string' || typeof children === 'undefined' ? children : children.toString();
-  const lines = text ? text.split('\n') : [];
+const AnimatedTextCharacter = ({ children }: any) => {
+  const text =
+    typeof children === "string" || typeof children === "undefined"
+      ? children
+      : children.toString();
+  const lines = text ? text.split("\n") : [];
   const [animationStarted, setAnimationStarted] = useState(false);
   const [ref, inView] = useInView();
 
@@ -48,9 +51,9 @@ const AnimatedTextCharacter = ({ children }) => {
       animate={animationStarted ? "visible" : "hidden"}
       ref={ref}
     >
-      {lines.map((line, lineIndex) => (
+      {lines.map((line: any, lineIndex: any) => (
         <motion.p
-          className="text-white mt-5"
+          className="mt-5 text-white"
           variants={container}
           key={lineIndex}
           custom={lineIndex}
